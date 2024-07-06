@@ -1,0 +1,5 @@
+# C++ output files
+*.out
+
+# VS Code
+.vscode
