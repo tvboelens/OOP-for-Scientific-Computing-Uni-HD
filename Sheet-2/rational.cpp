@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 int gcd(int x, int y)
 {
@@ -54,6 +55,7 @@ class Rational
         };
         int get_denominator() const { return m_denominator; }
         int get_numerator() const { return m_numerator; }
+        void print_number() { std::cout << get_numerator() << "/" << get_denominator(); }
 };
 
 Rational operator+(const Rational& p, const Rational& q)
@@ -105,18 +107,87 @@ Rational operator/(const Rational& p, const int& k)
     return p / Rational{1, k};
 }
 
+bool operator<(const Rational& p, const Rational& q)
+{
+    return (q - p).get_numerator() > 0;
+}
+
+std::vector<Rational> Farey(int n)
+{
+    std::vector<Rational> F = {Rational(0), Rational(1)};
+    if(n==1) {
+        return F;
+    }
+
+    for (unsigned int k = 2; k <= n; k++)
+    {
+        std::vector<Rational>::iterator e = F.end();
+        for (std::vector<Rational>::iterator m = F.begin(); m < (e-1); ++m)
+        {
+            if ((*m).get_denominator() + (*(m + 1)).get_denominator() == k)
+            {
+                m = F.insert(m + 1, Rational{(*m).get_numerator() + (*(m + 1)).get_numerator(),
+                                             (*m).get_denominator() + (*(m + 1)).get_denominator()});
+                e = F.end();//Insertion might have shifted e, so we need to reinitialize it.
+            }
+        }
+    }
+        return F;
+}
+
 int main()
 {
     Rational f1{ -3, 12 };
     Rational f2{4, 3};
 
-    std::cout << "f1+f2 = " << (f1 + f2).get_numerator() <<"/" << (f1+f2).get_denominator() << "\n";
-    std::cout << "f1*f2 = " << (f1*f2).get_numerator() << "/" << (f1*f2).get_denominator() << "\n";
-    std::cout << "4+f2 = " << (4 + f2).get_numerator() << "/" << (4 + f2).get_denominator() << "\n";
-    std::cout << "f2+5 = " << (f2+5).get_numerator() << "/" << (f2+5).get_denominator() << "\n";
-    std::cout << "12*f1 = " << (12*f1).get_numerator() << "/" << (12*f1).get_denominator() << "\n";
-    std::cout << "f1*6 = " << (f1*6).get_numerator() << "/" << (f1*6).get_denominator() << "\n";
-    std::cout << "f1/f2 = " << (f1 / f2).get_numerator() << "/" << (f1 / f2).get_denominator() << "\n";
+    std::cout << "f1 = ";
+    f1.print_number();
+    std::cout << "\n";
+
+    std::cout << "f2 = ";
+    f2.print_number();
+    std::cout << "\n";
+
+    std::cout << "f1+f2 = ";
+    (f1 + f2).print_number();
+    std::cout << "\n";
+
+    std::cout << "f1*f2 = ";
+    (f1 * f2).print_number();
+    std::cout << "\n";
+
+    std::cout << "4+f2 = ";
+    (4 + f2).print_number();
+    std::cout << "\n";
+
+    std::cout << "f2+5 = ";
+    (f2 + 5).print_number();
+    std::cout << "\n";
+
+    std::cout << "12*f1 = ";
+    (12 * f1).print_number();
+    std::cout << "\n";
+
+    std::cout << "f1*6 = ";
+    (f1 * 6).print_number();
+    std::cout << "\n";
+
+    std::cout << "f1/f2 = ";
+    (f1 / f2).print_number();
+    std::cout << "\n";
+
+    std::vector<Rational> F;
+    for (int i = 1; i < 7;++i)
+        {
+            F = Farey(i);
+            std::cout << "F_" << i << " = (";
+            for (std::vector<Rational>::iterator i = F.begin(); i < F.end(); ++i)
+            {
+                (*i).print_number();
+                std::cout << ", ";
+                }
+            std::cout << ")" << std::endl;
+        }
 
     return 0;
 }
