@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cassert>
 
 int gcd(int x, int y)
 {
@@ -37,6 +38,10 @@ class Rational
             : m_denominator{denominator / gcd(denominator, numerator)}
             , m_numerator{numerator / gcd(denominator, numerator)}
         {
+            if (m_denominator==0)
+            {
+                throw std::runtime_error("Denominator cannot be 0");
+            }
             if  (m_denominator<0)
             {
                 m_denominator *= -1;
