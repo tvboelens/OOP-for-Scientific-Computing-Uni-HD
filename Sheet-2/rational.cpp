@@ -4,7 +4,8 @@
 int gcd(int x, int y)
 {
     int largest, smallest, remainder;
-   
+    /* Use absolute value if x or y are negative. 
+    Euclidean algorithm requires us to know which number is larger.*/
     if (std::abs(x) > std::abs(y))
     {
         largest = std::abs(x);
@@ -15,6 +16,7 @@ int gcd(int x, int y)
         largest = std::abs(y);
         smallest = std::abs(x);
     }
+    // Implementation of Euclidean algorithm
     while (smallest>0)
     {
         remainder = largest % smallest;
@@ -27,34 +29,26 @@ int gcd(int x, int y)
 class Rational
 {
     private:
-        int m_numerator{};
-        int m_denominator {};
+        int m_numerator {1};
+        int m_denominator {1};
     public:
-        Rational()
-            : m_numerator{1} , m_denominator{1}
-        {
-            /* std::cout << "Rational " << m_numerator << 
-            "/" << m_denominator << " constructed \n"; */
-        };
+        Rational() {};
         Rational(int numerator, int denominator)
-            : m_denominator{denominator / gcd(denominator, numerator)},
-              m_numerator{numerator / gcd(denominator, numerator)}
+            : m_denominator{denominator / gcd(denominator, numerator)}
+            , m_numerator{numerator / gcd(denominator, numerator)}
         {
             if  (m_denominator<0)
             {
                 m_denominator *= -1;
-                m_numerator += -1;
+                m_numerator *= -1;
             }
-            //std::cout << "Rational " << m_numerator << "/" << m_denominator << " constructed \n";
         };
         Rational(int integer)
-            : m_numerator{integer}, m_denominator{1}
-        {
-            /* std::cout << "Rational " << m_numerator
-                      << "/" << m_denominator << " constructed \n"; */
-        };
-        int get_denominator() const { return m_denominator; }
-        int get_numerator() const { return m_numerator; }
+            : m_numerator{integer}
+            , m_denominator{1}
+        {};
+        const int& get_denominator() const { return m_denominator; }
+        const int& get_numerator() const { return m_numerator; }
         void print_number() { std::cout << get_numerator() << "/" << get_denominator(); }
 };
 
@@ -72,7 +66,7 @@ Rational operator+(const Rational& p, const int& k)
 
 Rational operator-(const Rational& p)
 {
-    return Rational{-p.get_numerator(), p.get_numerator()};
+    return Rational{-p.get_numerator(), p.get_denominator()};
 }
 
 Rational operator-(const Rational& p, const Rational& q)
@@ -118,7 +112,7 @@ std::vector<Rational> Farey(int n)
     if(n==1) {
         return F;
     }
-
+    // Determine Farey sequence recursively
     for (unsigned int k = 2; k <= n; k++)
     {
         std::vector<Rational>::iterator e = F.end();
