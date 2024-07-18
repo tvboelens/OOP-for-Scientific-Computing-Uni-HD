@@ -4,6 +4,10 @@
 
 int gcd(int x, int y)
 {
+    if (x==0|y==0)
+    {
+        return 1;
+    }
     int largest, smallest, remainder;
     /* Use absolute value if x or y are negative. 
     Euclidean algorithm requires us to know which number is larger.*/
