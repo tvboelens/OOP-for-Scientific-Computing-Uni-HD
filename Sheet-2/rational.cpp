@@ -33,6 +33,24 @@ class Rational
         int m_numerator {1};
         int m_denominator {1};
     public:
+        Rational& operator+=(const Rational &p)
+        {
+            int temp_denominator{m_denominator * p.get_denominator()};
+            int temp_numerator{m_denominator * p.get_numerator() + m_numerator + p.get_denominator()};
+            int d = gcd(temp_denominator, temp_numerator);
+            m_denominator = temp_denominator / d;
+            m_numerator = temp_numerator / d;
+            return *this;
+        }
+        Rational& operator *=(const Rational& p)
+        {
+            int d{gcd(m_denominator * p.get_denominator(), m_numerator * p.get_numerator())};
+            m_numerator *= p.get_numerator();
+            m_numerator /= d;
+            m_denominator *= p.get_denominator();
+            m_denominator /= d;
+            return *this;
+        }
         Rational() {};
         Rational(int numerator, int denominator)
             : m_denominator{denominator / gcd(denominator, numerator)}
@@ -52,16 +70,20 @@ class Rational
             : m_numerator{integer}
             , m_denominator{1}
         {};
+        Rational(const Rational& p)
+            : Rational{p.get_numerator(), p.get_numerator()} {};
         const int& get_denominator() const { return m_denominator; }
         const int& get_numerator() const { return m_numerator; }
         void print_number() { std::cout << get_numerator() << "/" << get_denominator(); }
 };
 
+
+
 Rational operator+(const Rational& p, const Rational& q)
 {
-    return Rational{
-        p.get_denominator()*q.get_numerator() + p.get_numerator()*q.get_denominator(), 
-        p.get_denominator()*q.get_denominator()};
+    Rational output{p};
+    output += q;
+    return output;
 }
 
 Rational operator+(const Rational& p, const int& k)
@@ -86,8 +108,9 @@ Rational operator-(const Rational& p, const int& k)
 
 Rational operator*(const Rational& p, const Rational& q)
 {
-    return Rational{p.get_numerator() * q.get_numerator(),
-                    p.get_denominator() * q.get_denominator()};
+    Rational output{p};
+    output *= q;
+    return output;
 }
 
 Rational operator*(const Rational& p, const int& k)
