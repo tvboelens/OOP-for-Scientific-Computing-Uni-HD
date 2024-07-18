@@ -123,10 +123,10 @@ std::vector<Rational> Farey(int n)
         std::vector<Rational>::iterator e = F.end();
         for (std::vector<Rational>::iterator m = F.begin(); m < (e-1); ++m)
         {
-            if ((*m).get_denominator() + (*(m + 1)).get_denominator() == k)
+            if (m -> get_denominator() + (m + 1) -> get_denominator() == k)
             {
-                m = F.insert(m + 1, Rational{(*m).get_numerator() + (*(m + 1)).get_numerator(),
-                                             (*m).get_denominator() + (*(m + 1)).get_denominator()});
+                m = F.insert(m + 1, Rational{m -> get_numerator() + (m + 1) -> get_numerator(),
+                                             m -> get_denominator() + (m + 1) -> get_denominator()});
                 e = F.end();//Insertion might have shifted e, so we need to reinitialize it.
             }
         }
@@ -182,7 +182,7 @@ int main()
             std::cout << "F_" << i << " = (";
             for (std::vector<Rational>::iterator i = F.begin(); i < F.end(); ++i)
             {
-                (*i).print_number();
+                i -> print_number();
                 std::cout << ", ";
                 }
             std::cout << ")" << std::endl;
