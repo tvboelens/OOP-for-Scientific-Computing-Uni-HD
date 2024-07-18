@@ -36,8 +36,9 @@ public:
         N = v.size();
         entries = v;
     }
+    
 
-    Vector<T>(const Vector<T> &v)
+    Vector<T>(const Vector<T>& v)
     {
         N = v.N;
         entries = v.entries;
