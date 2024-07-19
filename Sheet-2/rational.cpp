@@ -37,10 +37,10 @@ class Rational
         int m_numerator {1};
         int m_denominator {1};
     public:
-        Rational& operator+=(const Rational &p)
+        Rational& operator+=(const Rational& p)
         {
             int temp_denominator{m_denominator * p.get_denominator()};
-            int temp_numerator{m_denominator * p.get_numerator() + m_numerator + p.get_denominator()};
+            int temp_numerator{m_denominator * p.get_numerator() + m_numerator * p.get_denominator()};
             int d = gcd(temp_denominator, temp_numerator);
             m_denominator = temp_denominator / d;
             m_numerator = temp_numerator / d;
@@ -75,7 +75,7 @@ class Rational
             , m_denominator{1}
         {};
         Rational(const Rational& p)
-            : Rational{p.get_numerator(), p.get_numerator()} {};
+            : Rational{p.get_numerator(), p.get_denominator()} {};
         const int& get_denominator() const { return m_denominator; }
         const int& get_numerator() const { return m_numerator; }
         void print_number() { std::cout << get_numerator() << "/" << get_denominator(); }
@@ -161,4 +161,8 @@ std::vector<Rational> Farey(int n)
         return F;
 }
 
-
+std::ostream &operator<<(std::ostream &str, const Rational &r)
+{
+    str << r.get_numerator() << "/" << r.get_denominator();
+    return str;
+}
