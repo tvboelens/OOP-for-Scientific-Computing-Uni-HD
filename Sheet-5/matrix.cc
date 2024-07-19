@@ -210,7 +210,9 @@ std::vector<T> operator*(const Matrix<T>& A, const std::vector<T>& v)
                   << ") do not match!";
         std::cerr << std::endl;
     }
-    std::vector<T> output = std::vector<T>(A.get_numRows());
+    std::vector<T> output = std::vector<T>(
+        static_cast<size_t>(A.get_numRows()), static_cast<T>(0)
+        );
     for (int i = 0; i < A.get_numRows(); ++i)
     {
         for (int j = 0; j < A.get_numCols();++j)
@@ -231,7 +233,7 @@ Vector<T> operator*(const Matrix<T>& A, const Vector<T>& v)
                   << ") do not match!";
         std::cerr << std::endl;
     }
-    Vector<T> output = Vector<T>(A.get_numRows());
+    Vector<T> output = Vector<T>{A.get_numRows(), 0};
     for (int i = 0; i < A.get_numRows(); ++i)
     {
         for (int j = 0; j < A.get_numCols(); ++j)
