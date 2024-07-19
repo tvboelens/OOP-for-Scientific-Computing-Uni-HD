@@ -69,6 +69,10 @@ class Rational
                 m_denominator *= -1;
                 m_numerator *= -1;
             }
+            if (m_numerator==0)
+            {
+                m_denominator = 1;
+            }
         };
         Rational(int integer)
             : m_numerator{integer}
