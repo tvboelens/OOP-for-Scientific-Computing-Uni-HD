@@ -23,7 +23,7 @@ class Integral
     public:
         double fit(int num_subintervals = 0);
         Integral(const Function& func, const Quadrature& quad,
-                 int left_endpoint, int right_endpoint, int num_subintervals)
+                 double left_endpoint, double right_endpoint, int num_subintervals)
             : m_func{&func}
             , m_quad{&quad}
             , m_left_endpoint{left_endpoint}
