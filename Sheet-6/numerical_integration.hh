@@ -12,7 +12,7 @@ class Function
 class Quadrature
 {
     public:
-        virtual double fit(double left_endpoint, double right_endpoint) = 0;
+        virtual double fit(double left_endpoint, double right_endpoint) const = 0;
         Quadrature(const Function &function) : m_func{&function} {};
     protected:
         const Function* m_func;
