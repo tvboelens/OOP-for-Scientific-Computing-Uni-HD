@@ -24,8 +24,8 @@ class Integral
         void fit(int num_subintervals = 0);
         double evaluate() const;
         Integral(const Function &func, const Quadrature &quad,
-                 double left_endpoint, double right_endpoint, int num_subintervals = 0)
-            : m_func{&func}, m_quad{&quad}, m_left_endpoint{left_endpoint}, m_right_endpoint{right_endpoint}, subintegrals(num_subintervals) {};
+                 double left_endpoint, double right_endpoint)
+            : m_func{&func}, m_quad{&quad}, m_left_endpoint{left_endpoint}, m_right_endpoint{right_endpoint} {};
 
     private:
         const Function* m_func;
