@@ -28,7 +28,7 @@ class Integral
             , m_quad{&quad}
             , m_left_endpoint{left_endpoint}
             , m_right_endpoint{right_endpoint}
-            , subintegrals(num_subintervals, 0.) {};
+            , subintegrals(num_subintervals) {};
 
     private:
         const Function* m_func;
