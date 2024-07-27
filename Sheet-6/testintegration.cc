@@ -36,10 +36,14 @@ int main()
     Trapezoidal QT{p};
     Integral IS{p, QS, -3.0, 13.0};
     Integral IT{p, QT, -3.0, 13.0};
-    IS.fit(16);
-    IT.fit(16);
-    std::cout << "True integral = " << q(13) - q(-3) << "\n";
-    std::cout << "Integral according to Simpson method = " << IS.evaluate() << "\n";
-    std::cout << "Integral according to trapezoidal method = " << IT.evaluate() << "\n";
+    for (int i = 1; i <=15;++i)
+        {
+            IS.fit(i); // Something is wrong, for num_subintervals = 1 the answer is correct, but not for > 1
+            IT.fit(i);
+            std::cout << "num_subintervals = " << i << "\n";
+            std::cout << "True integral = " << q(13) - q(-3) << "\n";
+            std::cout << "Integral according to Simpson method = " << IS.evaluate() << "\n";
+            std::cout << "Integral according to trapezoidal method = " << IT.evaluate() << "\n";
+    }
     return 0;
 }
