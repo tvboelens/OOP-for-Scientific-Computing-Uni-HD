@@ -31,7 +31,7 @@ void Integral::fit(int num_subintervals)
 {
     if (num_subintervals!=0)
     {
-        subintegrals.resize(num_subintervals);
+        subintegrals.resize(num_subintervals,0);
         for (size_t i = 0; i < subintegrals.size();++i)
         {
             subintegrals.at(i) = m_quad->fit(
@@ -46,7 +46,7 @@ void Integral::fit(int num_subintervals)
 double Integral::evaluate() const
 {
     double integral{0};
-    for (std::vector<double>::const_iterator it = subintegrals.begin(); it <= subintegrals.end(); ++it)
+    for (std::vector<double>::const_iterator it = subintegrals.begin(); it < subintegrals.end(); ++it)
     {
         integral += *it;
     }
