@@ -23,6 +23,11 @@ class Integral
     public:
         void fit(int num_subintervals = 0);
         double evaluate() const;
+        void setInterval(double left_endpoint, double right_endpoint)
+        {
+            m_left_endpoint = left_endpoint;
+            m_right_endpoint = right_endpoint;
+        }
         Integral(const Function &func, const Quadrature &quad,
                  double left_endpoint, double right_endpoint)
             : m_func{&func}, m_quad{&quad}, m_left_endpoint{left_endpoint}, m_right_endpoint{right_endpoint} {};
@@ -30,8 +35,8 @@ class Integral
     private:
         const Function* m_func;
         const Quadrature* m_quad;
-        const double m_left_endpoint;
-        const double m_right_endpoint;
+        double m_left_endpoint;
+        double m_right_endpoint;
         std::vector<double> subintegrals;
 };
 
