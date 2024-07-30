@@ -91,7 +91,7 @@ int main()
     Integral IT_sine{f, QT_sine, 0.0, 2 * std::numbers::pi};
     for (int i = 1; i <= 20; ++i)
     {
-        IS_sine.setNumSubintervals(i); // Something is wrong, for num_subintervals = 1 the answer is correct, but not for > 1
+        IS_sine.setNumSubintervals(i); 
         IS_sine.fit();
         IT_sine.setNumSubintervals(i);
         IT_sine.fit();
@@ -101,14 +101,16 @@ int main()
         std::cout << "Integral according to trapezoidal method = " << IT_sine.evaluate() << "\n";
     }
 
-    IS_sine.setNumSubintervals(0); // Something is wrong, for num_subintervals = 1 the answer is correct, but not for > 1
-    IS_sine.fit(1e-5);
+    IS_sine.setNumSubintervals(0); 
+    IS_sine.fit(1e-10);
     IT_sine.setNumSubintervals(0);
-    IT_sine.fit(1e-5);
+    IT_sine.fit(1e-10);
     std::cout << "Using adptive integration...\n";
     std::cout << "True integral = " << F(2 * std::numbers::pi) - F(0) << "\n";
-    std::cout << "Integral according to Simpson method = " << IS_sine.evaluate() << "\n";
-    std::cout << "Integral according to trapezoidal method = " << IT_sine.evaluate() << "\n";
-    return 0;
+    std::cout << "Integral according to Simpson method = " << IS_sine.evaluate()
+              << ", used " << IS_sine.getNumSubintervals() << " subintervals\n";
+    std::cout << "Integral according to trapezoidal method = " << IT_sine.evaluate()
+              << ", used " << IT_sine.getNumSubintervals() << " subintervals" << std::endl;
+        return 0;
     return 0;
 }

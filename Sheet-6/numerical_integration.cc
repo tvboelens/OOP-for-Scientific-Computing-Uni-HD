@@ -116,3 +116,8 @@ double Integral::evaluate() const
     double integral = std::accumulate(subintegrals.begin(), subintegrals.end(), 0.0);
     return integral;
 }
+
+int Integral::getNumSubintervals() const
+{
+    return subintegrals.size();
+}

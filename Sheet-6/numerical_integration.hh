@@ -35,13 +35,12 @@ class Integral
         double evaluate() const;
         void setInterval(double left_endpoint, double right_endpoint); // Changes the interval over which we integrate and calculates the subintervals
         void setNumSubintervals(int n);
+        int getNumSubintervals() const;
         Integral(const Function &func, const Quadrature &quad,
                  double left_endpoint, double right_endpoint, int num_subintervals = 0)
-            : m_func{&func}
-            , m_quad{&quad}
-            , m_num_intervals{num_subintervals}
-            {
-                setInterval(left_endpoint, right_endpoint);
+            : m_func{&func}, m_quad{&quad}, m_num_intervals{num_subintervals}
+        {
+            setInterval(left_endpoint, right_endpoint);
             };
 
     private:
