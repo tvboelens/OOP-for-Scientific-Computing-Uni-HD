@@ -90,7 +90,7 @@ void Integral::fit(float eps)
             Q = m_quad->fit(*a, *b, *f_a, *f_b);
             Q_left_half = m_quad->fit(*a, midpoint, *f_a, f_midpoint);
             Q_right_half = m_quad->fit(midpoint, *b, f_midpoint, *f_b);
-            // Check if subdividing interval yields different result. If so, add midpoint and function evaluation
+            // Check if subdividing interval yields different result. If so, add midpoint and function evaluation to storage
             // Additionally store result of quadrature
             while (std::abs(Q_left_half + Q_right_half - Q) > eps)
             {
