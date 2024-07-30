@@ -55,11 +55,11 @@ void Integral::setNumSubintervals(int n)
     setInterval(left_endpoint, right_endpoint);
 }
 
-void Integral::fit(float error)
+void Integral::fit(float eps)
 {
+    subintegrals.clear();
     if (m_num_intervals!=0)
     {
-        subintegrals.clear();
         std::list<double>::iterator it_endpoints{m_interval_endpoints.begin()};
         std::list<double>::iterator it_values{m_function_values.begin()};
         while (subintegrals.size()<m_num_intervals)
@@ -71,16 +71,44 @@ void Integral::fit(float error)
             ++it_values;
         }
     }
-    /* else
+    else
     {
-        subintegrals.resize(1, m_quad->fit(m_left_endpoint, m_right_endpoint));
-        size_t i{0};
-        while (i<subintegrals.size())
+        std::list<double>::iterator a{m_interval_endpoints.begin()};
+        std::list<double>::iterator b{std::next(a)};
+        std::list<double>::iterator f_a{m_function_values.begin()};
+        std::list<double>::iterator f_b{std::next(f_a)};
+        double midpoint;
+        double f_midpoint;
+        double Q;
+        double Q_left_half;
+        double Q_right_half;
+        while (b != m_interval_endpoints.end())
         {
-            
+            // Variables for adaptive integration loop
+            midpoint = (*a + *b) / 2;
+            f_midpoint = m_func->operator()(midpoint);
+            Q = m_quad->fit(*a, *b, *f_a, *f_b);
+            Q_left_half = m_quad->fit(*a, midpoint, *f_a, f_midpoint);
+            Q_right_half = m_quad->fit(midpoint, *b, f_midpoint, *f_b);
+            // Check if subdividing interval yields different result. If so, add midpoint and function evaluation
+            // Additionally store result of quadrature
+            while (std::abs(Q_left_half + Q_right_half - Q) > eps)
+            {
+                b = m_interval_endpoints.insert(b, midpoint);
+                f_b = m_function_values.insert(f_b, f_midpoint);
+                midpoint = (*a + *b) / 2;
+                f_midpoint = m_func->operator()(midpoint);
+                Q = Q_left_half;
+                Q_left_half = m_quad->fit(*a, midpoint, *f_a, f_midpoint);
+                Q_right_half = m_quad->fit(midpoint, *b, f_midpoint, *f_b);
+            }
+            subintegrals.push_back(Q);
+            ++a;
+            ++b;
+            ++f_a;
+            ++f_b;
         }
-        
-    } */
+    } 
 }
 
 double Integral::evaluate() const

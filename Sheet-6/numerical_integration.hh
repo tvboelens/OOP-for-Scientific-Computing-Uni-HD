@@ -22,7 +22,7 @@ class Quadrature
 class Integral
 {
     public:
-        void fit(float error = 0.05);
+        void fit(float eps = 0.05);
         double evaluate() const;
         void setInterval(double left_endpoint, double right_endpoint);
         void setNumSubintervals(int n);
