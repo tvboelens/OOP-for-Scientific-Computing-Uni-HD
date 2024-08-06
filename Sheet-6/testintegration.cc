@@ -62,7 +62,7 @@ int main()
     Integral IT{p, QT, -3.0, 13.0};
     for (int i = 1; i <=20;++i)
     {
-            IS.setNumSubintervals(i); // Something is wrong, for num_subintervals = 1 the answer is correct, but not for > 1
+            IS.setNumSubintervals(i); 
             IS.fit();
             IT.setNumSubintervals(i);
             IT.fit();
@@ -72,7 +72,7 @@ int main()
             std::cout << "Integral according to trapezoidal method = " << IT.evaluate() << "\n";
     }
 
-    IS.setNumSubintervals(0); // Something is wrong, for num_subintervals = 1 the answer is correct, but not for > 1
+    IS.setNumSubintervals(0); 
     IS.fit();
     IT.setNumSubintervals(0);
     IT.fit();
