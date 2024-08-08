@@ -1,4 +1,4 @@
-#include "linked_list.cc"
+#include "linked_list.hh"
 #include <iostream>
 
 int main()

@@ -1,4 +1,4 @@
-#include "numerical_integration.cc"
+#include "numerical_integration.hh"
 #include <iostream>
 #include <numbers>
 #include <vector>
@@ -76,7 +76,7 @@ int main()
     IS.fit();
     IT.setNumSubintervals(0);
     IT.fit();
-    std::cout << "Using adptive integration...\n";
+    std::cout << "Using adaptive integration...\n";
     std::cout << "True integral = " << q(13) - q(-3) << "\n";
     std::cout << "Integral according to Simpson method = " << IS.evaluate() << "\n";
     std::cout << "Integral according to trapezoidal method = " << IT.evaluate() << "\n";

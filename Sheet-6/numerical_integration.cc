@@ -4,30 +4,21 @@
 #include <vector>
 #include <iostream>
 
-class Trapezoidal: public Quadrature
+double Trapezoidal::fit(const double& a, const double& b, const double& f_a, const double& f_b) const
 {
-    public:
-        virtual double fit(const double& a, const double& b, const double& f_a, const double& f_b) const override
-        {
-            double Q = {(f_a+f_b)/2};
-            Q *= (b - a);
-            return Q;
-        }
-        Trapezoidal(const Function &func) : Quadrature{func} {};
-};
+    double Q = {(f_a+f_b)/2};
+    Q *= (b - a);
+    return Q;
+}
 
-class Simpson : public Quadrature
+
+double Simpson::fit(const double &a, const double &b, const double &f_a, const double &f_b) const
 {
-    public:
-        virtual double fit(const double &a, const double &b, const double &f_a, const double &f_b) const override
-        {
-            double midpoint{(a + b) / 2};
-            double Q{f_a + 4*m_func->operator()(midpoint) + f_b};
-            Q *= (b - a) / 6;
-            return Q;
-        }
-        Simpson(const Function &func) : Quadrature{func} {};
-};
+    double midpoint{(a + b) / 2};
+    double Q{f_a + 4*m_func->operator()(midpoint) + f_b};
+    Q *= (b - a) / 6;
+    return Q;
+}
 
 void Integral::setInterval(double left_endpoint, double right_endpoint)
 {

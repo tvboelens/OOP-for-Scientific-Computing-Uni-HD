@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "rational.cpp"
+#include "rational.hh"
 
 int main()
 {

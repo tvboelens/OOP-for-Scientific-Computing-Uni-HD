@@ -54,4 +54,18 @@ class Integral
         std::list<double> subintegrals; // Stores the results of the quadrature on each subinterval.
 };
 
+class Trapezoidal : public Quadrature
+{
+public:
+    virtual double fit(const double &a, const double &b, const double &f_a, const double &f_b) const override;
+    Trapezoidal(const Function &func) : Quadrature{func} {};
+};
+
+class Simpson : public Quadrature
+{
+public:
+    virtual double fit(const double &a, const double &b, const double &f_a, const double &f_b) const override;
+    Simpson(const Function &func) : Quadrature{func} {};
+};
+
 #endif
