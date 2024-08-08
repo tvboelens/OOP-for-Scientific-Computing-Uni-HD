@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cassert>
+#include "rational.hh"
 
 int gcd(int x, int y)
 {
@@ -31,59 +32,46 @@ int gcd(int x, int y)
     return largest;
 }
 
-class Rational
+
+Rational& Rational::operator+=(const Rational& p)
 {
-    private:
-        int m_numerator {1};
-        int m_denominator {1};
-    public:
-        Rational& operator+=(const Rational& p)
-        {
-            int temp_denominator{m_denominator * p.get_denominator()};
-            int temp_numerator{m_denominator * p.get_numerator() + m_numerator * p.get_denominator()};
-            int d = gcd(temp_denominator, temp_numerator);
-            m_denominator = temp_denominator / d;
-            m_numerator = temp_numerator / d;
-            return *this;
-        }
-        Rational& operator *=(const Rational& p)
-        {
-            int d{gcd(m_denominator * p.get_denominator(), m_numerator * p.get_numerator())};
-            m_numerator *= p.get_numerator();
-            m_numerator /= d;
-            m_denominator *= p.get_denominator();
-            m_denominator /= d;
-            return *this;
-        }
-        Rational() {};
-        Rational(int numerator, int denominator)
-            : m_denominator{denominator / gcd(denominator, numerator)}
-            , m_numerator{numerator / gcd(denominator, numerator)}
-        {
-            if (m_denominator==0)
-            {
-                throw std::runtime_error("Denominator cannot be 0");
-            }
-            if  (m_denominator<0)
-            {
-                m_denominator *= -1;
-                m_numerator *= -1;
-            }
-            if (m_numerator==0)
-            {
-                m_denominator = 1;
-            }
-        };
-        Rational(int integer)
-            : m_numerator{integer}
-            , m_denominator{1}
-        {};
-        Rational(const Rational& p)
-            : Rational{p.get_numerator(), p.get_denominator()} {};
-        const int& get_denominator() const { return m_denominator; }
-        const int& get_numerator() const { return m_numerator; }
-        void print_number() { std::cout << get_numerator() << "/" << get_denominator(); }
-};
+    int temp_denominator{m_denominator * p.get_denominator()};
+    int temp_numerator{m_denominator * p.get_numerator() + m_numerator * p.get_denominator()};
+    int d = gcd(temp_denominator, temp_numerator);
+    m_denominator = temp_denominator / d;
+    m_numerator = temp_numerator / d;
+    return *this;
+}
+        
+Rational& Rational::operator *=(const Rational& p)
+{
+    int d{gcd(m_denominator * p.get_denominator(), m_numerator * p.get_numerator())};
+    m_numerator *= p.get_numerator();
+    m_numerator /= d;
+    m_denominator *= p.get_denominator();
+    m_denominator /= d;
+    return *this;
+}
+        
+Rational::Rational(int numerator, int denominator)
+    : m_denominator{denominator / gcd(denominator, numerator)}
+    , m_numerator{numerator / gcd(denominator, numerator)}
+{
+    if (m_denominator==0)
+    {
+        throw std::runtime_error("Denominator cannot be 0");
+    }
+    if  (m_denominator<0)
+    {
+        m_denominator *= -1;
+        m_numerator *= -1;
+    }
+    if (m_numerator==0)
+    {
+        m_denominator = 1;
+    }
+}
+
 
 
 
